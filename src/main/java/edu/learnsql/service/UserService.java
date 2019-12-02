@@ -1,18 +1,15 @@
 package edu.learnsql.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import edu.learnsql.model.Role;
-import edu.learnsql.model.User;
+import edu.learnsql.entities.main.Role;
+import edu.learnsql.entities.main.User;
+import edu.learnsql.repository.RoleRepository;
+import edu.learnsql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.learnsql.repository.RoleRepository;
-import edu.learnsql.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("userService")
 public class UserService {

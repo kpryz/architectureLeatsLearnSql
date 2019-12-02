@@ -75,7 +75,7 @@
                                     <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
                                 </div>
                                 <div class="col-xs-offset-1 col-xs-4 text-center">
-                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                    <a th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
                                         Password</a>
                                 </div>
                                 <div class="pull-right">
@@ -151,9 +151,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a th:href="@{/admin/roles/new}" ><i
+                        <li><a th:href="@{/admin/roles/new}"><i
                                 class="fa fa-plus"></i> New User Type</a></li>
-                        <li><a th:href="@{/admin/roles/all}" ><i class="fa fa-odnoklassniki"></i>
+                        <li><a th:href="@{/admin/roles/all}"><i class="fa fa-odnoklassniki"></i>
                             All User Types</a></li>
                     </ul>
                 </li>
@@ -437,7 +437,7 @@
 <script>
     $(function () {
         $('#example1').DataTable({
-            "ordering": false
+            'ordering': false
         });
         $('#table2').DataTable();
     });

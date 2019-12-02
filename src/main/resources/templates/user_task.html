@@ -75,7 +75,7 @@
                                     <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
                                 </div>
                                 <div class="col-xs-offset-1 col-xs-4 text-center">
-                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                    <a th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
                                         Password</a>
                                 </div>
                                 <div class="pull-right">
@@ -151,9 +151,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a th:href="@{/admin/roles/new}" ><i
+                        <li><a th:href="@{/admin/roles/new}"><i
                                 class="fa fa-plus"></i> New User Type</a></li>
-                        <li><a th:href="@{/admin/roles/all}" ><i class="fa fa-odnoklassniki"></i>
+                        <li><a th:href="@{/admin/roles/all}"><i class="fa fa-odnoklassniki"></i>
                             All User Types</a></li>
                     </ul>
                 </li>
@@ -254,15 +254,16 @@
                                 <!-- Form Name -->
                                 <legend>Edit User Task</legend>
                                 <!-- Text input-->
-                                <input type="hidden" name="id" th:field="${user_task.id}" />
+                                <input type="hidden" name="id" th:field="${user_task.id}"/>
 
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">User Name</label>
                                     <div class="col-md-3 text-left">
                                         <input type="hidden" th:field="${user_task.user.id}"
-                                               placeholder="user" class="form-control" /> <input type="text"
-                                                                                                 th:field="${user_task.user.name}" placeholder="user"
-                                                                                                 class="form-control" disabled />
+                                               placeholder="user" class="form-control"/> <input type="text"
+                                                                                                th:field="${user_task.user.name}"
+                                                                                                placeholder="user"
+                                                                                                class="form-control" disabled/>
                                     </div>
                                 </div>
 
@@ -273,9 +274,10 @@
                                                 th:title="${user_task.task.name}" name="task" tabindex="-98">
 
                                             <option th:each="task: ${tasks}" th:value="${task.id}"
-                                                    th:if="${user_task.task.id} == ${task.id}" selected="selected"  th:text="${task.name}"></option>
+                                                    th:if="${user_task.task.id} == ${task.id}" selected="selected"
+                                                    th:text="${task.name}"></option>
                                             <option th:each="task: ${tasks}" th:value="${task.id}"
-                                                    th:if="${user_task.task.id} != ${task.id}"  th:text="${task.name}"></option>
+                                                    th:if="${user_task.task.id} != ${task.id}" th:text="${task.name}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -285,9 +287,11 @@
                                     <label class="col-md-4 control-label" for="submitButton"></label>
                                     <div class="col-md-8">
                                         <button type="submit" id="submitButton" name="submitButton"
-                                                class="btn btn-success">Save</button>
+                                                class="btn btn-success">Save
+                                        </button>
                                         <button type="button" class="btn btn-inverse"
-                                                onclick="window.history.back()">Cancel</button>
+                                                onclick="window.history.back()">Cancel
+                                        </button>
                                     </div>
 
                                 </div>
@@ -307,7 +311,7 @@
                                 <!-- Form Name -->
                                 <legend>User Task Assignment</legend>
                                 <!-- Text input-->
-                                <input type="hidden" name="id" th:field="${user_task.id}" />
+                                <input type="hidden" name="id" th:field="${user_task.id}"/>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">User</label>
                                     <div class="col-md-4 text-left">
@@ -336,9 +340,11 @@
                                     <label class="col-md-4 control-label" for="submitButton"></label>
                                     <div class="col-md-8">
                                         <button type="submit" id="submitButton" name="submitButton"
-                                                class="btn btn-success">Save</button>
+                                                class="btn btn-success">Save
+                                        </button>
                                         <button type="button" class="btn btn-inverse"
-                                                onclick="window.history.back()">Cancel</button>
+                                                onclick="window.history.back()">Cancel
+                                        </button>
                                     </div>
 
                                 </div>
@@ -375,7 +381,7 @@
 <script>
     $(function () {
         $('#example1').DataTable({
-            "ordering": false
+            'ordering': false
         });
         $('#table2').DataTable();
     });

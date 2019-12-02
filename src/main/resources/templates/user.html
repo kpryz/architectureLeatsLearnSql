@@ -76,7 +76,7 @@
                                     <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
                                 </div>
                                 <div class="col-xs-offset-1 col-xs-4 text-center">
-                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                    <a th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
                                         Password</a>
                                 </div>
                                 <div class="pull-right">
@@ -152,9 +152,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a th:href="@{/admin/roles/new}" ><i
+                        <li><a th:href="@{/admin/roles/new}"><i
                                 class="fa fa-plus"></i> New User Type</a></li>
-                        <li><a th:href="@{/admin/roles/all}" ><i class="fa fa-odnoklassniki"></i>
+                        <li><a th:href="@{/admin/roles/all}"><i class="fa fa-odnoklassniki"></i>
                             All User Types</a></li>
                     </ul>
                 </li>
@@ -257,20 +257,20 @@
                                 <!-- Form Name -->
                                 <legend>Edit User</legend>
                                 <!-- Text input-->
-                                <input type="hidden" name="id" th:field="${user.id}" />
+                                <input type="hidden" name="id" th:field="${user.id}"/>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="textinput">User Name
                                     </label>
                                     <div class="col-md-4">
                                         <input type="text" th:field="${user.name}"
-                                               placeholder="Name" class="form-control" />
+                                               placeholder="Name" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="textinput">User Email</label>
                                     <div class="col-md-4">
                                         <input type="text" th:field="${user.email}"
-                                               placeholder="Name" class="form-control" />
+                                               placeholder="Name" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -285,12 +285,13 @@
                                     <label class="col-md-4 control-label">User Type</label>
                                     <div class="col-md-4 text-left">
                                         <select class="selectpicker" data-live-search="true"
-                                              name="role" tabindex="-98">
+                                                name="role" tabindex="-98">
 
                                             <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} == ${role.id}" selected="selected"  th:text="${role.role}">
+                                                    th:if="${user.role.id} == ${role.id}" selected="selected"
+                                                    th:text="${role.role}">
                                             <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} != ${role.id}"   th:text="${role.role}">
+                                                    th:if="${user.role.id} != ${role.id}" th:text="${role.role}">
 
                                             </option>
                                         </select>
@@ -302,8 +303,10 @@
                                     <label class="col-md-4 control-label" for="submitButton"></label>
                                     <div class="col-md-8">
                                         <button type="submit" id="submitButton" name="submitButton"
-                                                class="btn btn-success">Save</button>
-                                        <button type="button" class="btn btn-inverse" onclick="window.history.back()">Cancel</button>
+                                                class="btn btn-success">Save
+                                        </button>
+                                        <button type="button" class="btn btn-inverse" onclick="window.history.back()">Cancel
+                                        </button>
                                     </div>
 
                                 </div>
@@ -338,7 +341,7 @@
 <script>
     $(function () {
         $('#example1').DataTable({
-            "ordering": false
+            'ordering': false
         });
         $('#table2').DataTable();
     });

@@ -1,11 +1,11 @@
 jQuery('.confirmPassword').validate({
     rules: {
-        "password": {
+        'password': {
             minlength: 3
         },
-        "password-confirm": {
+        'password-confirm': {
             minlength: 3,
-            equalTo : "#user_password"
+            equalTo: '#user_password'
         }
     }
 });
