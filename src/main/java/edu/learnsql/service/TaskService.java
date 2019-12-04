@@ -1,7 +1,7 @@
 package edu.learnsql.service;
 
 import edu.learnsql.entities.main.Task;
-import edu.learnsql.repository.TaskRepository;
+import edu.learnsql.dao.main.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

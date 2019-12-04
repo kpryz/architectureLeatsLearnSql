@@ -2,8 +2,8 @@ package edu.learnsql.service;
 
 import edu.learnsql.entities.main.Role;
 import edu.learnsql.entities.main.User;
-import edu.learnsql.repository.RoleRepository;
-import edu.learnsql.repository.UserRepository;
+import edu.learnsql.dao.main.RoleRepository;
+import edu.learnsql.dao.main.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,8 +52,8 @@ public class UserService {
 
 
     public void saveUser(User user) {
-
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         user.setActive(1);
         Role userRole = roleRepository.findByRole("USER");
         user.setRole(userRole);

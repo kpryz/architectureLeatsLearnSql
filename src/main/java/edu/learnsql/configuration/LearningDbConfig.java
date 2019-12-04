@@ -1,6 +1,7 @@
 package edu.learnsql.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -16,9 +17,9 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 
 @Configuration
-@PropertySource({"classpath:persistence-multiple-db.properties"})
+@PropertySource({"classpath:application.properties"})
 @EnableJpaRepositories(
-        basePackages = "edu.learnsql.entities.learning",
+        basePackages = "edu.learnsql.dao.learning",
         entityManagerFactoryRef = "learningEntityManager",
         transactionManagerRef = "learningTransactionManager"
 )
@@ -29,7 +30,7 @@ public class LearningDbConfig {
     public LearningDbConfig(Environment env) {this.env = env;}
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean learningEntityManager() {
+        public LocalContainerEntityManagerFactoryBean learningEntityManager() {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(learningDataSource());
@@ -38,25 +39,26 @@ public class LearningDbConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto",
-                       env.getProperty("hibernate.hbm2ddl.auto"));
+//        properties.put("hibernate.hbm2ddl.auto",
+//                       env.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect",
-                       env.getProperty("hibernate.dialect"));
+                       env.getProperty("spring.jpa.properties.hibernate.dialect"));
         em.setJpaPropertyMap(properties);
 
         return em;
     }
 
     @Bean
+    @ConfigurationProperties(prefix = "spring.learning-datasource")
     public DataSource learningDataSource() {
 
         DriverManagerDataSource dataSource
                 = new DriverManagerDataSource();
         dataSource.setDriverClassName(
-                env.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getProperty("spring.learning.datasource.url"));
-        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+                env.getProperty("spring.datasource.driverClassName"));
+        dataSource.setUrl(env.getProperty("spring.learning-datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.learning-datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.learning-datasource.password"));
 
         return dataSource;
     }

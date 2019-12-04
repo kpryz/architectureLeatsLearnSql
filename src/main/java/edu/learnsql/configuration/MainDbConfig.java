@@ -19,7 +19,7 @@ import java.util.HashMap;
 @Configuration
 @PropertySource({"classpath:application.properties"})
 @EnableJpaRepositories(
-        basePackages = "edu.learnsql.entities.main",
+        basePackages = "edu.learnsql.dao.main",
         entityManagerFactoryRef = "mainEntityManager",
         transactionManagerRef = "mainTransactionManager"
 )
@@ -41,10 +41,10 @@ public class MainDbConfig {
                 = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto",
-                       env.getProperty("hibernate.hbm2ddl.auto"));
+//        properties.put("hibernate.hbm2ddl.auto",
+//                       env.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect",
-                       env.getProperty("hibernate.dialect"));
+                       env.getProperty("spring.jpa.properties.hibernate.dialect"));
         em.setJpaPropertyMap(properties);
 
         return em;
@@ -57,7 +57,7 @@ public class MainDbConfig {
                 = new DriverManagerDataSource();
         dataSource.setDriverClassName(
                 env.getProperty("spring.datasource.driverClassName"));
-        dataSource.setUrl(env.getProperty("spring.main.datasource.url"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.username"));
         dataSource.setPassword(env.getProperty("spring.datasource.password"));
 

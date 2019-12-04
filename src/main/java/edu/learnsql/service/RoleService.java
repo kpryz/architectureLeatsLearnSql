@@ -1,7 +1,7 @@
 package edu.learnsql.service;
 
 import edu.learnsql.entities.main.Role;
-import edu.learnsql.repository.RoleRepository;
+import edu.learnsql.dao.main.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

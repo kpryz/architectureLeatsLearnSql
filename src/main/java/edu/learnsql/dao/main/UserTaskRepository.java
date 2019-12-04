@@ -1,4 +1,4 @@
-package edu.learnsql.repository;
+package edu.learnsql.dao.main;
 
 import edu.learnsql.entities.main.Task;
 import edu.learnsql.entities.main.User;
