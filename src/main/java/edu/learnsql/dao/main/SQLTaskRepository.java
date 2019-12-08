@@ -1,9 +1,9 @@
 package edu.learnsql.dao.main;
 
-import edu.learnsql.entities.main.Task;
+import edu.learnsql.entities.main.SQLTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Integer> {
+public interface SQLTaskRepository extends JpaRepository<SQLTask, Integer> {
 }

@@ -2,7 +2,7 @@ package edu.learnsql.controller;
 
 import edu.learnsql.entities.main.User;
 import edu.learnsql.service.UserService;
-import edu.learnsql.service.UserTaskService;
+import edu.learnsql.service.SQLTaskProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +25,7 @@ public class UserPageController {
     private UserService userService;
 
     @Autowired
-    private UserTaskService userTaskService;
+    private SQLTaskProgressService SQLTaskProgressService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -79,7 +79,7 @@ public class UserPageController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("rule", new User());
         modelAndView.addObject("user", userService.findUser(id));
-        modelAndView.addObject("usertasks", userTaskService.findByUser(userService.findUser(id)));
+        modelAndView.addObject("usertasks", SQLTaskProgressService.findByUser(userService.findUser(id)));
         modelAndView.addObject("mode", "MODE_TASKS");
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());

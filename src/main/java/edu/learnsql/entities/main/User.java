@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -42,10 +44,9 @@ public class User {
     @Column(name = "active")
     private int active;
 
-
     @ManyToOne
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    private Set<UserTask> userTask = new HashSet<UserTask>();
+    private List<SQLTask> userTask = new ArrayList<>();
 }

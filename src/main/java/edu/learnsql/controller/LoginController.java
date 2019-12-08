@@ -1,13 +1,13 @@
 package edu.learnsql.controller;
 
 import edu.learnsql.entities.main.Role;
-import edu.learnsql.entities.main.Task;
+import edu.learnsql.entities.main.SQLTask;
+import edu.learnsql.entities.main.SQLTaskProgress;
 import edu.learnsql.entities.main.User;
-import edu.learnsql.entities.main.UserTask;
 import edu.learnsql.service.RoleService;
-import edu.learnsql.service.TaskService;
+import edu.learnsql.service.SQLTaskProgressService;
+import edu.learnsql.service.SQLTaskService;
 import edu.learnsql.service.UserService;
-import edu.learnsql.service.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,10 +31,10 @@ public class LoginController {
     private RoleService roleService;
 
     @Autowired
-    private TaskService taskService;
+    private SQLTaskService SQLTaskService;
 
     @Autowired
-    private UserTaskService userTaskService;
+    private SQLTaskProgressService SQLTaskProgressService;
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -101,21 +101,21 @@ public class LoginController {
         List<User> users2 = new ArrayList<>();
         users = userService.findUserbyRole(role);
         users2 = userService.findUserbyRole(role2);
-        List<Task> tasks = new ArrayList<>();
-        tasks = taskService.findAll();
+        List<SQLTask> tasks = new ArrayList<>();
+        tasks = SQLTaskService.findAll();
         int taskCount = tasks.size();
         int adminCount = users.size();
         int userCount = users2.size();
-        modelAndView.addObject("adminCount", adminCount);//Authentication for NavBar
-        modelAndView.addObject("userCount", userCount);//Authentication for NavBar
-        modelAndView.addObject("taskCount", taskCount);//Authentication for NavBar
+        modelAndView.addObject("adminCount", adminCount); //Authentication for NavBar
+        modelAndView.addObject("userCount", userCount); //Authentication for NavBar
+        modelAndView.addObject("taskCount", taskCount); //Authentication for NavBar
         //-----------------------------------------
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loginUser = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("control", loginUser.getRole().getRole());//Authentication for NavBar
         modelAndView.addObject("auth", loginUser);
-        List<UserTask> userTasks = new ArrayList<>();
-        userTasks = userTaskService.findByUser(loginUser);
+        List<SQLTaskProgress> userTasks = new ArrayList<>();
+        userTasks = SQLTaskProgressService.findByUser(loginUser);
         modelAndView.addObject("userTaskSize", userTasks.size());
         modelAndView.setViewName("home");
         return modelAndView;

@@ -1,9 +1,9 @@
 package edu.learnsql.service;
 
-import edu.learnsql.entities.main.Role;
-import edu.learnsql.entities.main.User;
 import edu.learnsql.dao.main.RoleRepository;
 import edu.learnsql.dao.main.UserRepository;
+import edu.learnsql.entities.main.Role;
+import edu.learnsql.entities.main.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

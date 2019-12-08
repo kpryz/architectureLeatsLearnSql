@@ -1,10 +1,10 @@
 package edu.learnsql.controller;
 
-import edu.learnsql.entities.main.Task;
+import edu.learnsql.entities.main.SQLTask;
 import edu.learnsql.entities.main.User;
-import edu.learnsql.service.TaskService;
+import edu.learnsql.service.SQLTaskProgressService;
+import edu.learnsql.service.SQLTaskService;
 import edu.learnsql.service.UserService;
-import edu.learnsql.service.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,18 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/admin/tasks")
-public class TaskController {
-
+public class SQLTaskController {
+    @Autowired
+    private SQLTaskService SQLTaskService;
 
     @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private UserTaskService userTaskService;
+    private SQLTaskProgressService SQLTaskProgressService;
 
     @Autowired
     private UserService userService;
@@ -35,8 +32,8 @@ public class TaskController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView newTask() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("task", new Task());
-        modelAndView.addObject("tasks", taskService.findAll());
+        modelAndView.addObject("task", new SQLTask());
+        modelAndView.addObject("tasks", SQLTaskService.findAll());
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
         modelAndView.addObject("mode", "MODE_NEW");
@@ -45,9 +42,8 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView saveTask(@Valid Task task, BindingResult bindingResult) {
-        task.setDateCreated(new Date());
-        taskService.save(task);
+    public ModelAndView saveTask(@Valid SQLTask task, BindingResult bindingResult) {
+        SQLTaskService.save(task);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
@@ -57,10 +53,10 @@ public class TaskController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ModelAndView allTasks() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("rule", new Task());
+        modelAndView.addObject("rule", new SQLTask());
         //POINT=7 http://stackoverflow.com/questions/22364886/neither-bindingresult-nor-plain-target-object-for-bean-available
         // -as-request-attr
-        modelAndView.addObject("tasks", taskService.findAll());
+        modelAndView.addObject("tasks", SQLTaskService.findAll());
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
         modelAndView.addObject("mode", "MODE_ALL");
@@ -71,8 +67,8 @@ public class TaskController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public ModelAndView updateTask(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("rule", new Task());
-        modelAndView.addObject("task", taskService.findTask(id));
+        modelAndView.addObject("rule", new SQLTask());
+        modelAndView.addObject("task", SQLTaskService.findTask(id));
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
         modelAndView.addObject("mode", "MODE_UPDATE");
@@ -83,19 +79,19 @@ public class TaskController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public ModelAndView deleteTask(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
-        modelAndView.addObject("rule", new Task());
+        modelAndView.addObject("rule", new SQLTask());
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
-        taskService.delete(id);
+        SQLTaskService.delete(id);
         return modelAndView;
     }
 
     @RequestMapping(value = "/per_inf", method = RequestMethod.GET)
     public ModelAndView infTask(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("rule", new Task());
-        modelAndView.addObject("task", taskService.findTask(id));
-        modelAndView.addObject("usertasks", userTaskService.findByTask(taskService.findTask(id)));
+        modelAndView.addObject("rule", new SQLTask());
+        modelAndView.addObject("task", SQLTaskService.findTask(id));
+        modelAndView.addObject("usertasks", SQLTaskProgressService.findByTask(SQLTaskService.findTask(id)));
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
         modelAndView.addObject("mode", "MODE_INF");
