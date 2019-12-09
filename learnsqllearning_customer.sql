@@ -1,0 +1,6 @@
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (1, 'Ukraine', '79382', 'Terevytska 2a', 'Lviv', 'Psevdyk Burashyn', 'Teeth Inc.');
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (2, 'Ukraine', '79384', 'Twevytska 43a', 'Lviv', 'Budak Pseudokym', 'Softserve Inc.');
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (3, 'Ukraine', '234123', 'Sykhivska 34', 'Lviv', 'Budak Pseudokym', 'EPAM');
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (4, 'Poland', '123412', 'Pshevyzkogo 5', 'Wroclaw', 'Mateush Kabykskyi', 'Programiky Inc.');
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (5, 'Poland', '55732', 'Kokabelty 3 ', 'Warsaw', 'Kotash Mashtykush', 'Putash');
+INSERT INTO learnsqllearning.customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (6, 'Ukraine', '78842', 'Bandery 2', 'Lviv', 'Kudelya Daryna', 'NULP');

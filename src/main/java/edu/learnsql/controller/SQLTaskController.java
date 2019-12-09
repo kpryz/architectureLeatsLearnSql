@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/admin/tasks")
@@ -37,12 +38,12 @@ public class SQLTaskController {
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
         modelAndView.addObject("mode", "MODE_NEW");
-        modelAndView.setViewName("task");
+        modelAndView.setViewName("sqltask");
         return modelAndView;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView saveTask(@Valid SQLTask task, BindingResult bindingResult) {
+    public ModelAndView saveTask(@Valid SQLTask task, BindingResult bindingResult) throws SQLException {
         SQLTaskService.save(task);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
         modelAndView.addObject("auth", getUser());
@@ -77,7 +78,7 @@ public class SQLTaskController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public ModelAndView deleteTask(@RequestParam int id) {
+    public ModelAndView deleteTask(@RequestParam int id) throws SQLException {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
         modelAndView.addObject("rule", new SQLTask());
         modelAndView.addObject("auth", getUser());

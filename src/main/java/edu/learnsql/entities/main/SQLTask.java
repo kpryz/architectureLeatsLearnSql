@@ -20,9 +20,6 @@ public class SQLTask {
 
     private String description;
 
-    @ManyToOne
-    private User user;
-
     private String precondition;
 
     private String query;

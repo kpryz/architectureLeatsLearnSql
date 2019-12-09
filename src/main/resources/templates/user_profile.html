@@ -157,16 +157,19 @@
                                         <tr>
                                             <th>Task Name</th>
                                             <th>Task Description</th>
-                                            <th>Task Date-Created</th>
-                                            <th>Task Status(Finished)</th>
+                                            <th>Complexity</th>
+                                            <th>Max attempts</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="tasks : ${usertasks}">
-                                            <td th:text="${tasks.task.name}"></td>
-                                            <td th:text="${tasks.task.description}"></td>
-                                            <td th:text="${tasks.task.dateCreated}"></td>
-                                            <td th:text="${tasks.task.finished}"></td>
+                                            <td th:text="${tasks.sqlTask.name}"></td>
+                                            <td th:text="${tasks.sqlTask.description}"></td>
+                                            <td th:text="${tasks.sqlTask.complexity.complexity}"></td>
+                                            <td th:text="${tasks.sqlTask.maxAttempts}"></td>
+                                            <td><a th:href="@{/sqlTask/edit(id=${user.id})}">Edit profile information <span
+                                                    class="pull-right glyphicon glyphicon-pencil  badge bg-blue"> Edit</span></a></td>
                                         </tr>
                                         </tbody>
                                     </table>

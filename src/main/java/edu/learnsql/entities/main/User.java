@@ -34,7 +34,7 @@ public class User {
     @Column(name = "password")
     @Length(min = 3, message = "*Your password can not be less than 3 characters!")
     @NotEmpty(message = "*Please provide your password! This field can not be empty!")
-    @Transient
+//    @Transient
 
     private String password;
     @Column(name = "name")
@@ -48,5 +48,5 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    private List<SQLTask> userTask = new ArrayList<>();
+    private List<SQLTaskProgress> userTaskProgress = new ArrayList<>();
 }

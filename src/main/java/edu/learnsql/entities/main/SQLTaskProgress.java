@@ -24,7 +24,7 @@ public class SQLTaskProgress {
     private SQLTask sqlTask;
 
     @Enumerated(EnumType.STRING)
-    private ProgresStatus query;
+    private ProgresStatus status;
 
     private LocalDateTime lastModified;
 

@@ -116,13 +116,13 @@
                                     <label class="col-md-4 control-label">User Task</label>
                                     <div class="col-md-4 text-left">
                                         <select class="selectpicker" data-live-search="true"
-                                                th:title="${user_task.task.name}" name="task" tabindex="-98">
+                                                th:title="${user_task.sqlTask.name}" name="task" tabindex="-98">
 
                                             <option th:each="task: ${tasks}" th:value="${task.id}"
-                                                    th:if="${user_task.task.id} == ${task.id}" selected="selected"
+                                                    th:if="${user_task.sqlTask.id} == ${task.id}" selected="selected"
                                                     th:text="${task.name}"></option>
                                             <option th:each="task: ${tasks}" th:value="${task.id}"
-                                                    th:if="${user_task.task.id} != ${task.id}" th:text="${task.name}"></option>
+                                                    th:if="${user_task.sqlTask.id} != ${task.id}" th:text="${task.name}"></option>
                                         </select>
                                     </div>
                                 </div>
