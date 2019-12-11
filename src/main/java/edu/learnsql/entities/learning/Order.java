@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Order {
+public class Order implements Entity{
 
     @DBTable(columnName ="id")
     private Integer id;

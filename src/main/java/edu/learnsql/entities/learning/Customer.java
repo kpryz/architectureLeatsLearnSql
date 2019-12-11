@@ -3,7 +3,7 @@ package edu.learnsql.entities.learning;
 import lombok.Data;
 
 @Data
-public class Customer {
+public class Customer implements Entity{
 
     @DBTable(columnName ="id")
     private Integer id;

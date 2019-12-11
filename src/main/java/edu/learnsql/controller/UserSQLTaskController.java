@@ -46,7 +46,7 @@ public class UserSQLTaskController {
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     public ModelAndView checkUserTask(@Valid SQLTask rule, @RequestParam int id) {
         SQLTask task = SQLTaskService.findTask(id);
-        boolean isEqual = SQLTaskService.checkQueries(task.getQuery(), rule.getQuery());
+        boolean isEqual = SQLTaskService.checkQueries(task, rule.getQuery());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("rule", rule);
         modelAndView.addObject("task", task);

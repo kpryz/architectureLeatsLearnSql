@@ -59,7 +59,7 @@
                                     <div class="row">
                                         <label class="col-md-4 control-label"
                                                for="sqlTaskDescription">Description</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <label th:text="${task.description}" id="sqlTaskDescription"></label>
                                         </div>
                                     </div>
@@ -67,27 +67,20 @@
                                     <form autocomplete="off" action="#" th:action="@{/task/check(id=${task.id})}"
                                           th:object="${rule}" method="post" class="form-horizontal"
                                           role="form">
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="sqlUserQuery">Result
-                                                Query</label>
-                                            <div class="col-md-4">
+                                            <label class="col-md-2 control-label" for="sqlUserQuery">Result Query</label>
+                                            <div class="col-md-12">
                                                 <input type="text" th:field="${rule.query}" id="sqlUserQuery"
                                                        placeholder=""
                                                        class="form-control"/>
                                             </div>
-                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-md-4 control-label" for="submitButton"></label>
                                             <div class="col-md-8">
                                                 <button type="submit" id="submtButton" name="submitButton"
-                                                        class="btn btn-success">Submit
-                                                </button>
-                                                <button type="button" class="btn btn-inverse"
-                                                        onclick="window.history.back()">Cancel
+                                                        class="btn btn-success">Verify
                                                 </button>
                                             </div>
-
                                         </div>
                                     </form>
                                 </div>

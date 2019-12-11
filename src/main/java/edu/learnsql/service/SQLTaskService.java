@@ -2,10 +2,7 @@ package edu.learnsql.service;
 
 import edu.learnsql.dao.learning.CommonDao;
 import edu.learnsql.dao.main.SQLTaskRepository;
-import edu.learnsql.entities.learning.Car;
-import edu.learnsql.entities.learning.Customer;
-import edu.learnsql.entities.learning.Employee;
-import edu.learnsql.entities.learning.Order;
+import edu.learnsql.entities.learning.*;
 import edu.learnsql.entities.main.SQLTask;
 import org.omg.CORBA.WStringSeqHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -27,7 +22,8 @@ public class SQLTaskService {
     public enum QueryType {
         SELECT,
         INSERT,
-        UPDATE
+        UPDATE,
+        DELETE
     }
 
     @Autowired
@@ -84,31 +80,36 @@ public class SQLTaskService {
             return QueryType.INSERT;
         } else if (QueryType.UPDATE.toString().equalsIgnoreCase(parseQuery[0].trim())) {
             return QueryType.UPDATE;
+        } else if (QueryType.DELETE.toString().equalsIgnoreCase(parseQuery[0].trim())) {
+            return QueryType.DELETE;
         } else {
             return null;
         }
     }
 
-    public boolean checkQueries(String correctQuery, String userQuery) {
-        QueryType typeOfSQLQuery = getTypeOfSQLQuery(correctQuery);
+    public boolean checkQueries(SQLTask task, String userQuery) {
+//        QueryType typeOfSQLQuery = getTypeOfSQLQuery(correctQuery);
 
         QueryType typeOfSQLQuery1 = getTypeOfSQLQuery(userQuery);
 
-        if (!typeOfSQLQuery.equals(typeOfSQLQuery1)) {
-            return false;
-        }
+//        if (!typeOfSQLQuery.equals(typeOfSQLQuery1)) {
+//            return false;
+//        }
 
         boolean result = false;
 
-        switch (typeOfSQLQuery) {
+        switch (typeOfSQLQuery1) {
             case INSERT:
-                result = checkInsertQueries(correctQuery, userQuery);
+                result = checkInsertQueries(task.getQuery(), userQuery, task.getPostcondition());
                 break;
             case SELECT:
-                result = checkSelectQueries(correctQuery, userQuery);
+                result = checkSelectQueries(task.getQuery(), userQuery);
                 break;
             case UPDATE:
-                result = checkUpdateQueries(correctQuery, userQuery);
+                result = checkUpdateQueries(task.getQuery(), userQuery, task.getPostcondition());
+                break;
+            case DELETE:
+                result = checkDeleteQueries(task.getQuery(), userQuery, task.getPostcondition());
                 break;
             default:
                 return false;
@@ -116,19 +117,48 @@ public class SQLTaskService {
         return result;
     }
 
+    public boolean checkDeleteQueries(String checkQuery, String userQuery, String insertionQuery) {
+        Class<?> type = getTypeOfTable(checkQuery, QueryType.SELECT);
+        Class<?> type2 = getTypeOfTable(userQuery, QueryType.DELETE);
 
-    public boolean checkUpdateQueries(String correctQuery, String userQuery) {
-        Class<?> type = getTypeOfTable(correctQuery, QueryType.UPDATE);
+        if (!type.equals(type2)) {
+            return false;
+        }
+
+        List<?> userQueryResult = Collections.emptyList();
+
+        try {
+            commonDao.executeUpdate(userQuery, em);
+        } catch (SQLException ex) {
+            System.err.println("Insert query is incorrect!");
+        }
+
+        try {
+            userQueryResult = commonDao.selectQuery(type, checkQuery, em);
+        } catch (SQLException ex) {
+            System.err.println("Max id query is incorrect!");
+        }
+
+        if (userQueryResult.size() == 0) {
+            try {
+                commonDao.executeUpdate(insertionQuery, em);
+            } catch (SQLException ex) {
+                System.err.println("Max id query is incorrect!");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkUpdateQueries(String checkQuery, String userQuery, String postCondQuery) {
+        Class<?> type = getTypeOfTable(checkQuery, QueryType.SELECT);
         Class<?> type2 = getTypeOfTable(userQuery, QueryType.UPDATE);
 
         if (!type.equals(type2)) {
             return false;
         }
 
-        List<?> result = Collections.emptyList();
         List<?> userQueryResult = Collections.emptyList();
-
-        String selectQueryToCheck = getCheckQueryOfUpdate(correctQuery);
 
         try {
             commonDao.executeUpdate(userQuery, em);
@@ -137,40 +167,56 @@ public class SQLTaskService {
         }
 
         try {
-            userQueryResult = commonDao.selectQuery(type, selectQueryToCheck, em);
+            userQueryResult = commonDao.selectQuery(type, checkQuery, em);
         } catch (SQLException ex) {
             System.err.println("User check insert query is incorrect");
         }
 
-        try {
-            commonDao.executeUpdate(correctQuery, em);
-        } catch (SQLException ex) {
-            System.err.println("Task query is incorrect!");
+        if (userQueryResult.size() > 0) {
+            try {
+                commonDao.executeUpdate(postCondQuery, em);
+            } catch (SQLException ex) {
+                System.err.println("Task query is incorrect!");
+            }
+            return true;
         }
 
-        try {
-            result = commonDao.selectQuery(type, selectQueryToCheck, em);
-        } catch (SQLException ex) {
-            System.err.println("Task check query is incorrect");
-        }
+        return false;
+    }
 
-        if (userQueryResult.size() != result.size()) {
+    public boolean checkInsertQueries(String checkQuery, String userQuery, String deleteQuery) {
+        Class<?> type = getTypeOfTable(checkQuery, QueryType.SELECT);
+        Class<?> type2 = getTypeOfTable(userQuery, QueryType.INSERT);
+
+        if (!type.equals(type2)) {
             return false;
         }
 
-        for (int i = 0; i < userQueryResult.size(); ++i) {
-            if (!userQueryResult.get(i).equals(result.get(i))) {
-                return false;
-            }
+        List<?> userQueryResult = Collections.emptyList();
+
+        try {
+            commonDao.executeUpdate(userQuery, em);
+        } catch (SQLException ex) {
+            System.err.println("Insert query is incorrect!");
         }
 
-        return true;
-    }
+        try {
+            userQueryResult = commonDao.selectQuery(type, checkQuery, em);
+        } catch (SQLException ex) {
+            System.err.println("Max id query is incorrect!");
+        }
 
-    public boolean checkInsertQueries(String correctQuery, String userQuery) {
+        if (userQueryResult.size() > 0) {
+            try {
+                deleteQuery += " id=" + ((Entity) userQueryResult.get(0)).getId().toString() + ";";
+                commonDao.executeUpdate(deleteQuery, em);
+            } catch (SQLException ex) {
+                System.err.println("Max id query is incorrect!");
+            }
+            return true;
+        }
+
         return false;
-
-        // TO DO
     }
 
     public boolean checkSelectQueries(String correctQuery, String userQuery) {
@@ -219,6 +265,12 @@ public class SQLTaskService {
             case SELECT:
                 keyword = "FROM";
                 break;
+            case INSERT:
+                keyword = "INTO";
+                break;
+            case DELETE:
+                keyword = "FROM";
+                break;
         }
 
         String result = null;
@@ -256,7 +308,7 @@ public class SQLTaskService {
         for (int i = 0; i < queryParse.length; ++i) {
             if ("SET".equalsIgnoreCase(queryParse[i].trim())) {
                 for (int j = i + 1; j < queryParse.length; ++j) {
-                    if(queryParse[j].equalsIgnoreCase("WHERE")) {
+                    if (queryParse[j].equalsIgnoreCase("WHERE")) {
                         break;
                     }
                     String[] field = queryParse[j].split("=");
@@ -285,6 +337,75 @@ public class SQLTaskService {
         result += "FROM " + tableName + " ";
 
         result += "WHERE " + whereCondition.toLowerCase();
+
+        return result;
+    }
+
+    public String getCheckQueryOfInsertion(String query) {
+        String[] queryParse = query.split(" ");
+        String tableName = null;
+        if (queryParse.length > 3) {
+            tableName = queryParse[2].trim();
+        }
+
+        List<String> insertFields = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        String whereCondition = null;
+
+        for (int i = 3; i < queryParse.length; ++i) {
+            if ("VALUES".equalsIgnoreCase(queryParse[i].trim())) {
+                for (int j = i + 1; j < queryParse.length; ++j) {
+                    if (queryParse[j].equalsIgnoreCase(")")) {
+                        i = j;
+                        break;
+                    } else if (queryParse[j].equalsIgnoreCase("(")) {
+                        continue;
+                    } else {
+                        String[] fields = queryParse[j].split(",");
+                        for (String f : fields) {
+                            values.add(f);
+                        }
+                    }
+                }
+                break;
+            } else if ("(".equalsIgnoreCase(queryParse[i].trim())) {
+                for (int j = i + 1; j < queryParse.length; ++j) {
+                    if (queryParse[j].equalsIgnoreCase(")")) {
+                        i = j;
+                        break;
+                    } else {
+                        String[] fields = queryParse[j].split(",");
+                        for (String f : fields) {
+                            insertFields.add(f);
+                        }
+                    }
+                }
+            }
+        }
+
+//        whereCondition = query.toUpperCase().split("WHERE")[1].trim();
+
+        String result = "SELECT ";
+
+        for (int i = 0; i < insertFields.size(); ++i) {
+            if (i + 1 == insertFields.size()) {
+                result += insertFields.get(i) + " ";
+            } else {
+                result += insertFields.get(i) + ", ";
+            }
+        }
+
+        result += "FROM " + tableName + " ";
+
+        result += "WHERE id=1";
+
+//        for (int i = 0; i < values.size(); ++i) {
+//            if (i + 1 == values.size()) {
+//                result += values.get(i) + " ";
+//            } else {
+//                result += values.get(i) + ", ";
+//            }
+//        }
 
         return result;
     }
