@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>App MERT | TASK MANAGEMENT</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/css/dataTables.bootstrap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/css/_all-skins.min.css">
+    <link href="/css/bootselect.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="fragments :: header"></header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside th:replace="fragments :: sidebar"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div th:if="${mode == 'MODE_EXEC'}">
+                <section class="content-header">
+                    <h1>
+                        Execution of task
+                    </h1>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <!-- /.box-header -->
+                                <div class="box-body">
+
+                                    <div class="row">
+                                        <label class="col-md-4 control-label"
+                                               for="sqlTaskDescription">Description</label>
+                                        <div class="col-md-4">
+                                            <label th:text="${task.description}" id="sqlTaskDescription"></label>
+                                        </div>
+                                    </div>
+
+                                    <form autocomplete="off" action="#" th:action="@{/task/check(id=${task.id})}"
+                                          th:object="${rule}" method="post" class="form-horizontal"
+                                          role="form">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="sqlUserQuery">Result
+                                                Query</label>
+                                            <div class="col-md-4">
+                                                <input type="text" th:field="${rule.query}" id="sqlUserQuery"
+                                                       placeholder=""
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submitButton"></label>
+                                            <div class="col-md-8">
+                                                <button type="submit" id="submtButton" name="submitButton"
+                                                        class="btn btn-success">Submit
+                                                </button>
+                                                <button type="button" class="btn btn-inverse"
+                                                        onclick="window.history.back()">Cancel
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+            </div>
+
+            <div th:if="${mode2 == 'MODE_RES'}">
+                <section class="content-header">
+                    <h1>
+                        Result
+                    </h1>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label" th:text="${result}"></label>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </section>
+            </div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery 2.2.3 -->
+    <script src="/js/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+
+    <!-- SlimScroll -->
+    <script src="/js/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="/js/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/js/demo.js"></script>
+    <!-- page script -->
+    <script src="/js/bootstrap-select.min.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap.min.js"></script>
+
+
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'ordering': false
+            });
+            $('#table2').DataTable();
+        });
+    </script>
+</body>
+</html>
