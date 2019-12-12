@@ -93,7 +93,7 @@ LOCK TABLES `sqltask` WRITE;
 /*!40000 ALTER TABLE `sqltask` DISABLE KEYS */;
 INSERT INTO `sqltask` VALUES (1,'Get all information about customers',3,'Get Customers',NULL,NULL,'select * from customers;',2);
 INSERT INTO `sqltask` VALUES (2,'Get all information about cars',3,'Get All Cars',NULL,NULL,'select * from car;',2);
-INSERT INTO `sqltask` VALUES (3,'Get all orders',3,'Get All Orders',NULL,NULL,'select * from orders;',2);
+INSERT INTO `sqltask` VALUES (3,'Get all orders',3,'Get All Orders','Update car set color = "blue" WHERE id = 3;',NULL,'SELECT * FROM car WHERE id = 3 AND color = "gray";',2);
 INSERT INTO `sqltask` VALUES (4,'Update car with id = 3, set color to gray',3,'Update car table',NULL,NULL,'update car set color = "gray" where id = 3;',2);
 INSERT INTO `sqltask` VALUES (5,'Insert Into Car table',3,'Insert into car table','DELETE FROM CAR WHERE ',NULL,'SELECT * FROM CAR WHERE color="blue" AND model="BMW";',2);
 INSERT INTO `sqltask` VALUES (6,'Delete Customer Oleh Paliukh',3,'Delete customer','INSERT INTO customer (id, country, postal_code, address, city, contact_name, customer_name) VALUES (7, ''Ukraine'', ''78842'', ''Bandery 2'', ''Lviv'', ''Oleh Paliukh'', ''NULP'');',NULL,'SELECT * FROM Customer WHERE contact_name = "Oleh Paliukh";',2);

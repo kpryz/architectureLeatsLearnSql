@@ -57,32 +57,35 @@
                                 <div class="box-body">
 
                                     <div class="row">
-                                        <label class="col-md-4 control-label"
+                                        <label class="col-md-12 control-label"
                                                for="sqlTaskDescription">Description</label>
-                                        <div class="col-md-8">
-                                            <label th:text="${task.description}" id="sqlTaskDescription"></label>
+                                        <div class="col-md-12">
+                                            <div th:text="${task.description}" id="sqlTaskDescription"></div>
                                         </div>
                                     </div>
 
                                     <form autocomplete="off" action="#" th:action="@{/task/check(id=${task.id})}"
                                           th:object="${rule}" method="post" class="form-horizontal"
                                           role="form">
-                                            <label class="col-md-2 control-label" for="sqlUserQuery">Result Query</label>
-                                            <div class="col-md-12">
-                                                <input type="text" th:field="${rule.query}" id="sqlUserQuery"
-                                                       placeholder=""
-                                                       class="form-control"/>
-                                            </div>
+                                        <label class=" control-label" for="sqlUserQuery">Result Query</label>
+                                        <div class="col-md-12"
+                                             style="padding: 0; margin-bottom: 20px; margin-top: 4px; height: 120px">
+                                                <textarea th:field="${rule.query}" id="sqlUserQuery"
+                                                          style="height: 120px;"
+                                                          placeholder=""
+                                                          class="form-control"/>
+                                        </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label" for="submitButton"></label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-3">
                                                 <button type="submit" id="submtButton" name="submitButton"
-                                                        class="btn btn-success">Verify
+                                                        style="display: block; width: 180px;"
+                                                        class="btn btn-success btn-lg">Verify
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -91,7 +94,9 @@
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
+                </section>
             </div>
+
 
             <div th:if="${mode2 == 'MODE_RES'}">
                 <section class="content-header">
@@ -104,13 +109,25 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label" th:text="${result}"></label>
+                            <h3 th:if="${result == 'true'}" class="col-xs-12 control-label text-center"
+                                style="background-color: limegreen; height:60px; padding-top: 15px; align-content: center">
+                                Correct</h3>
                         </div>
                         <!-- /.col -->
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3 th:if="${result == 'false'}" class="col-xs-12 control-label text-center"
+                                    style="background-color: orangered; height:60px; padding-top: 15px; align-content: center">
+                                    Not Correct</h3>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.row -->
                 </section>
             </div>
+        </section>
     </div>
     <!-- ./wrapper -->
 

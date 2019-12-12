@@ -45,9 +45,11 @@ public class SQLTaskController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView saveTask(@Valid SQLTask task, BindingResult bindingResult) throws SQLException {
         SQLTaskService.save(task);
-        ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("auth", getUser());
         modelAndView.addObject("control", getUser().getRole().getRole());
+        modelAndView.addObject("mode", "MODE_ALL");
+        modelAndView.setViewName("task");
         return modelAndView;
     }
 

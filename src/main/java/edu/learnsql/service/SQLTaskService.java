@@ -1,6 +1,7 @@
 package edu.learnsql.service;
 
 import edu.learnsql.dao.learning.CommonDao;
+import edu.learnsql.dao.main.SQLTaskProgressRepository;
 import edu.learnsql.dao.main.SQLTaskRepository;
 import edu.learnsql.entities.learning.*;
 import edu.learnsql.entities.main.SQLTask;
@@ -52,21 +53,20 @@ public class SQLTaskService {
     }
 
     public void save(SQLTask task) throws SQLException {
-        String[] sqlStatements = task.getPrecondition().split(";");
+//        String[] sqlStatements = task.getPrecondition().split(";");
 
-        for (String statement : sqlStatements) {
-            commonDao.executeUpdate(statement, em);
-        }
-
+//        for (String statement : sqlStatements) {
+//            commonDao.executeUpdate(statement, em);
+//        }
         SQLTaskRepository.save(task);
     }
 
     public void delete(int id) throws SQLException {
-        String[] sqlStatements = SQLTaskRepository.findOne(id).getPostcondition().split(";");
-
-        for (String statement : sqlStatements) {
-            commonDao.executeUpdate(statement, em);
-        }
+//        String[] sqlStatements = SQLTaskRepository.findOne(id).getPostcondition().split(";");
+//
+//        for (String statement : sqlStatements) {
+//            commonDao.executeUpdate(statement, em);
+//        }
 
         SQLTaskRepository.delete(id);
     }
@@ -277,7 +277,7 @@ public class SQLTaskService {
         boolean isNextTableName = false;
         for (String str : parsedQuery) {
             if (keyword.equalsIgnoreCase(str) || isNextTableName) {
-                if (isNextTableName) {
+                if (isNextTableName && !"".equals(str)) {
                     result = str.split(";")[0].trim();
                     break;
                 }

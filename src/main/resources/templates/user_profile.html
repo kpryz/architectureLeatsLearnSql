@@ -169,8 +169,8 @@
                                             <td th:text="${tasks.sqlTask.complexity.complexity}"></td>
                                             <td th:text="${tasks.sqlTask.maxAttempts}"></td>
                                             <td><a th:href="@{/task/execute(id=${tasks.sqlTask.id})}"><span
-                                                    class="pull-right glyphicon glyphicon-pencil  badge bg-blue">Execute</span></a></td>
-                                            <td><a th:href="@{/sqlTask/edit(id=${user.id})}">Edit profile information <span
+                                                    class="pull-right glyphicon badge bg-blue">Execute</span></a></td>
+                                            <td ><a th:href="@{/sqlTask/edit(id=${user.id})}">Edit profile information <span
                                                     class="pull-right glyphicon glyphicon-pencil  badge bg-blue"> Edit</span></a></td>
                                         </tr>
                                         </tbody>

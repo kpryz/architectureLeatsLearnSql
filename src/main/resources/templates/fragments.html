@@ -97,6 +97,15 @@
             </span>
                 </a>
             </li>
+
+            <li class="treeview">
+                <a th:href="@{/myprofile/all(id=${auth.id})}">
+                    <i class="fa fa-file-text text-green"></i> <span>SQL Tasks</span>
+                    <span class="pull-right-container">
+            </span>
+                </a>
+            </li>
+
             <li th:if="${control != 'ADMIN'}" class="treeview">
                 <a th:href="@{/myprofile/mytasks(id=${auth.id})}">
                     <i class="fa fa-file-text text-green"></i> <span>My SQL Tasks</span>
@@ -111,7 +120,7 @@
             </span>
                 </a>
             </li>
-            <li class="treeview">
+            <li th:if="${control == 'ADMIN'}" class="treeview">
                 <a th:href="@{/users/all}">
                     <i class="fa fa-users text-green"></i>
                     <span>All Users</span>
@@ -141,10 +150,10 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a th:href="@{/admin/user-task/new}"><i class="fa fa-laptop"></i> Task Assignment</a>
+<!--                    <li><a th:href="@{/admin/user-task/new}"><i class="fa fa-laptop"></i> Task Assignment</a>-->
                     </li>
                     <li><a th:href="@{/admin/tasks/new}"><i class="fa fa-plus"></i> New Task</a></li>
-                    <li><a th:href="@{/admin/tasks/all}"><i class="fa fa-file-text"></i> All Tasks</a></li>
+<!--                    <li><a th:href="@{/admin/tasks/all}"><i class="fa fa-file-text"></i> All Tasks</a></li>-->
                 </ul>
             </li>
         </ul>

@@ -87,6 +87,19 @@ public class UserPageController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ModelAndView showTask(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("rule", new User());
+        modelAndView.addObject("user", userService.findUser(id));
+        modelAndView.addObject("usertasks", SQLTaskProgressService.findAll());
+        modelAndView.addObject("mode", "MODE_TASKS");
+        modelAndView.addObject("auth", getUser());
+        modelAndView.addObject("control", getUser().getRole().getRole());
+        modelAndView.setViewName("user_profile");
+        return modelAndView;
+    }
+
 
     //--------------------------------------------------------------------------------------------------------
 
